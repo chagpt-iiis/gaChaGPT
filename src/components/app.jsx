@@ -66,7 +66,7 @@ export default class App extends Component {
       isBeginnersWishLimited: false,
       isBeginnersWishOver10: false,
       inventory: {},
-      wasDisclaimerSeen: false,
+      wasDisclaimerSeen: true,
       isSettingsPageVisible: false,
       currentWishes: [],
       selectedCharacterEventWish: 'moment-of-bloom-2',
