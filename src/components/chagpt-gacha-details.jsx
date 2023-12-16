@@ -4,18 +4,18 @@ import DetailsBox from './details-components/details-box';
 import StarsBar from './details-components/stars-bar';
 import SubheadingSeparator from './details-components/subheading-separator';
 import EventDurationHeading from './details-components/event-duration-heading'
-import ChaGPT from '../models/chagpt'
+import ChagptGacha from '../models/chagpt-gacha'
 import Table from './details-components/table'
 import Title from './details-components/title'
 
 
-export default function ChaGPTDetails() {
-  const cha = new ChaGPT()
+export default function ChagptGachaDetails() {
+  const chagpt = new ChagptGacha()
   return (
     <div className="details pt-5">
       <Container>
         <Title>
-          <h1>| Event Wish "<span className="blue">Adrift</span> in the Harbor"</h1>
+          <h1>| Event Wish "<span className="blue">ChaGPT</span> Gacha"</h1>
         </Title>
         <SubheadingSeparator
           content="Increased Drop Rates!"
@@ -63,7 +63,7 @@ export default function ChaGPTDetails() {
         <Row>
           <Col xs="12">
             <p className="my-3">
-              Event Wish "<span className="blue">Adrift</span> in the Harbor" is now available. During this event wish, the <span className="orange">event-exclusive</span> 5-star character <span className="aqua">"Plenilune Gaze" Ganyu (Cryo)</span> as well as 4-star characters <span className="brass">"Chivalric Blossom" Noelle (Geo)</span>, <span className="aqua">"Juvenile Galant" Xingqiu (Hydro)</span>, and <span className="orange">"Exquisite Delicacy" Xiangling (Pyro)</span> will get a <span className="orange">huge drop-rate boost</span>!
+              Event Wish "<span className="blue">ChaGPT</span> Gacha" is now available. During this event wish, the <span className="orange">event-exclusive</span> 5-star character <span className="aqua">"Plenilune Gaze" Ganyu (Cryo)</span> as well as 4-star characters <span className="brass">"Chivalric Blossom" Noelle (Geo)</span>, <span className="aqua">"Juvenile Galant" Xingqiu (Hydro)</span>, and <span className="orange">"Exquisite Delicacy" Xiangling (Pyro)</span> will get a <span className="orange">huge drop-rate boost</span>!
               <br/>
               <span className="orange">※ Of the above characters, the event-exclusive character will not be available in the standard wish "Wanderlust Invocation".</span>
             </p>
@@ -74,14 +74,14 @@ export default function ChaGPTDetails() {
               5-Star Items
             </p>
             <p className="my-3">
-              For Event Wish "<span className="blue">Adrift</span> in the Harbor": Base probability of winning 5-star character = <span className="orange">0.600%</span>; consolidated probability (incl. guarantee) = <span className="orange">1.600%</span>; guaranteed to win 5-star character at least once per <span className="orange">90</span> attempts.
+              For Event Wish "<span className="blue">ChaGPT</span> Gacha": Base probability of winning 5-star character = <span className="orange">0.600%</span>; consolidated probability (incl. guarantee) = <span className="orange">1.600%</span>; guaranteed to win 5-star character at least once per <span className="orange">90</span> attempts.
               The first time you win a 5-star item in this event wish, there is a <span className="orange">50.000%</span> chance it will be the promotional character <span className="aqua">"Plenilune Gaze" Ganyu (Cryo)</span>. If the first 5-star character you win in this event wish is not the promotional character, then the next 5-star character you win is <span className="orange">guaranteed</span> to be the promotional character.
             </p>
             <p className="my-3">
               4-Star Items
             </p>
             <p className="my-3">
-              For Event Wish "<span className="blue">Adrift</span> in the Harbor": Base probability of winning 4-star item = <span className="orange">5.100%</span>; base probability of winning 4-star character = <span className="orange">2.550%</span>, and base probability of winning 4-star weapon = <span className="orange">2.550%</span>; consolidated probability (incl. guarantee) of winning 4-star item = <span className="orange">13.000%</span>; guaranteed to win 4-star or above item at least once per <span className="orange">10</span> attempts; probability of winning 4-star item through the guarantee = <span className="orange">99.400%</span>, and probability of winning 5-star item through the guarantee = <span className="orange">0.600%</span>. <br />
+              For Event Wish "<span className="blue">ChaGPT</span> Gacha": Base probability of winning 4-star item = <span className="orange">5.100%</span>; base probability of winning 4-star character = <span className="orange">2.550%</span>, and base probability of winning 4-star weapon = <span className="orange">2.550%</span>; consolidated probability (incl. guarantee) of winning 4-star item = <span className="orange">13.000%</span>; guaranteed to win 4-star or above item at least once per <span className="orange">10</span> attempts; probability of winning 4-star item through the guarantee = <span className="orange">99.400%</span>, and probability of winning 5-star item through the guarantee = <span className="orange">0.600%</span>. <br />
               The first time you win a 4-star item in this event wish, there is a <span className="orange">50.000%</span> chance it will be one of the featured characters  <span className="brass">"Chivalric Blossom" Noelle (Geo)</span>, <span className="aqua">"Juvenile Galant" Xingqiu (Hydro)</span>, and <span className="orange">"Exquisite Delicacy" Xiangling (Pyro)</span>. If the first 4-star item you win in this event wish is not one of the featured characters, then the next 4-star item you win is <span className="orange">guaranteed</span> to be a featured character.
             </p>
             <p className="my-3">
@@ -110,7 +110,7 @@ export default function ChaGPTDetails() {
           bgColor="#dcbba5"
         />
         <Table
-          items={cha.getDrops(5)}
+          items={chagpt.getDrops(5)}
         />
         <StarsBar
           starCount={4}
@@ -118,7 +118,7 @@ export default function ChaGPTDetails() {
           bgColor="#b6abbf"
         />
         <Table
-          items={cha.getDrops(4)}
+          items={chagpt.getDrops(4)}
         />
         <StarsBar
           starCount={3}
@@ -126,7 +126,7 @@ export default function ChaGPTDetails() {
           bgColor="#a5bacc"
         />
         <Table
-          items={cha.getDrops(3)}
+          items={chagpt.getDrops(3)}
         />
       </Container>
     </div>

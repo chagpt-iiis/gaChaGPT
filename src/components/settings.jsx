@@ -29,6 +29,7 @@ export default class Settings extends Component {
       'reign-of-serenity': 'Reign of Serenity',
       'drifting-luminescence': 'Drifting Luminescence',
       'moment-of-bloom-2': 'Moment of Bloom 2',
+      'chagpt-gacha': 'ChaGPT Gacha',
     }
     this.onChange = this.onChange.bind(this)
   }

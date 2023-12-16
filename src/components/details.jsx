@@ -23,6 +23,7 @@ import EpitomeInvocationDetails from './epitome-invocation-details'
 import Navbar from './details-components/navbar'
 import WanderlustInvocationDetails from './wanderlust-invocation-details'
 import BeginnersWishDetails from './beginners-wish-details'
+import ChagptGachaDetails from './chagpt-gacha-details'
 
 export default function Details(props) {
   const { selectedDetail, backToHome } = props
@@ -50,6 +51,7 @@ export default function Details(props) {
     'epitome-invocation': <EpitomeInvocationDetails/>,
     'wanderlust-invocation': <WanderlustInvocationDetails/>,
     'beginners-wish': <BeginnersWishDetails/>,
+    'chagpt-gacha': <ChagptGachaDetails/>,
   }
   return (
     <>

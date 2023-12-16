@@ -27,6 +27,7 @@ import MomentOfBloom2 from '../models/moment-of-bloom-2'
 import BeginnersWish from '../models/beginners-wish'
 import EpitomeInvocation from '../models/epitome-invocation'
 import WanderlustInvocation from '../models/wanderlust-invocation'
+import ChagptGacha from '../models/chagpt-gacha'
 import { version } from '../../package.json';
 
 
@@ -59,12 +60,13 @@ export default class App extends Component {
     this.reignOfSerenity = new ReignOfSerenity()
     this.driftingLuminescence = new DriftingLuminescence()
     this.momentOfBloom2 = new MomentOfBloom2()
+    this.chagptGacha = new ChagptGacha()
     this.state = {
       view: 'banners',
       currentDetails: 'beginners-wish',
       selectedWish: 'beginnersWish',
-      isBeginnersWishLimited: false,
-      isBeginnersWishOver10: false,
+      isBeginnersWishLimited: true,
+      isBeginnersWishOver10: true,
       inventory: {},
       wasDisclaimerSeen: true,
       isSettingsPageVisible: false,
@@ -94,6 +96,7 @@ export default class App extends Component {
         'reign-of-serenity': 0,
         'drifting-luminescence': 0,
         'moment-of-bloom-2': 0,
+        'chagpt-gacha': 0,
       }
     }
   }
@@ -201,6 +204,7 @@ export default class App extends Component {
         'reign-of-serenity': this.reignOfSerenity.getState().attemptsCount,
         'drifting-luminescence': this.driftingLuminescence.getState().attemptsCount,
         'moment-of-bloom-2': this.momentOfBloom2.getState().attemptsCount,
+        'chagpt-gacha': this.chagptGacha.getState().attemptsCount,
       }
     })
   }
@@ -228,9 +232,10 @@ export default class App extends Component {
     this.reignOfSerenity.reset()
     this.driftingLuminescence.reset()
     this.momentOfBloom2.reset()
+    this.chagptGacha.reset()
     this.setState({
-      isBeginnersWishLimited: false,
-      isBeginnersWishOver10: false,
+      isBeginnersWishLimited: true,
+      isBeginnersWishOver10: true,
       selectedWish: previouslySelectedWish,
       inventory: {}
     }, this.saveData)
@@ -271,6 +276,7 @@ export default class App extends Component {
       reignOfSerenity: this.reignOfSerenity.getState(),
       driftingLuminescence: this.driftingLuminescence.getState(),
       momentOfBloom2: this.momentOfBloom2.getState(),
+      chagptGacha: this.chagptGacha.getState(),
     }
     localStorage.setItem('data', JSON.stringify(data))
     this.syncWishCountersWithState()
@@ -308,6 +314,7 @@ export default class App extends Component {
       this.reignOfSerenity.attemptsCount = data.reignOfSerenity || 0
       this.driftingLuminescence.attemptsCount = data.driftingLuminescence || 0
       this.momentOfBloom2.attemptsCount = data.momentOfBloom2 || 0
+      this.chagptGacha.attemptsCount = data.chagptGacha || 0
       this.setState({
         isBeginnersWishLimited,
         isBeginnersWishOver10,
@@ -344,6 +351,7 @@ export default class App extends Component {
       this.reignOfSerenity.setState(data.reignOfSerenity)
       this.driftingLuminescence.setState(data.driftingLuminescence)
       this.momentOfBloom2.setState(data.momentOfBloom2)
+      this.chagptGacha.setState(data.chagptGacha)
       this.setState({
         isBeginnersWishLimited,
         isBeginnersWishOver10,
