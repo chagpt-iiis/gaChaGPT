@@ -61,5 +61,14 @@ module.exports = {
         use: 'file-loader?name=videos/[name].[ext]',
       }
     ]
-  }
+  },
+  performance: {
+    hints: 'warning',
+    maxEntrypointSize: 40000000,
+    maxAssetSize: 10000000,
+    assetFilter: function(assetFilename) {
+      return assetFilename.endsWith('.css') || assetFilename.endsWith('.js')
+    },
+  },
+  mode: 'development',
 };

@@ -1,0 +1,155 @@
+import React, { Component } from 'react'
+import { Container, Row, Col, Badge, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import Title from './details-components/title'
+import Navbar from './details-components/navbar'
+import ListViewChagpt from './inventory-components/list-view-chagpt';
+import sadPaimon from '../assets/images/sad-paimon.png'
+import IconViewChagpt from './inventory-components/icon-view-chagpt';
+
+export default class InventoryChagpt extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      view: 'listView',
+      orderBy: 'rating',
+      showOnly: 'all'
+    }
+    this.onChange = this.onChange.bind(this)
+  }
+  onChange({target: {name, value}}) {
+    this.setState({[name]: value})
+  }
+  calculateAmountSpent(list) {
+    let wishes = list.reduce((acc, curr) => acc + curr.quantity, 0)
+    return `$${((0.0129 * 160) * wishes).toFixed(2)}`
+  }
+  render() {
+    const { backToHome, inventory } = this.props
+    const { orderBy, view, showOnly } = this.state
+    const inventoryList = Object.values(inventory)
+    const sorting = {
+      rating: (item1, item2) => item2.assignedRating - item1.assignedRating,
+      quantity: (item1, item2) => item2.quantity - item1.quantity,
+      name: (item1, item2) => item1.uniqueId.toString().localeCompare(item2.uniqueId.toString()),
+    }
+    const showFilter = {
+      all: item => item,
+      fiveStars: item => item.assignedRating === 5,
+      fourStars: item => item.assignedRating === 4,
+      threeStars: item => item.assignedRating === 3,
+      twoStars: item => item.assignedRating === 2,
+      oneStars: item => item.assignedRating === 1,
+    }
+    // est cost per primogen, 1600 gems per 10 wishes
+    const amountSpent = this.calculateAmountSpent(inventoryList)
+    return (
+      <>
+        <Navbar
+          backToHome={backToHome}
+        />
+        <div className="details pt-5 min-vh-100">
+          <Container>
+            <Title>
+              <h1>| ChaGPT Inventory</h1>
+            </Title>
+            <Form
+            onSubmit={e => e.preventDefault()}
+            >
+              <Row>
+                <Col xs="6" sm="3">
+                  <FormGroup>
+                    <Label for="orderBy">Order By</Label>
+                    <Input
+                      type="select"
+                      name="orderBy"
+                      id="orderBy"
+                      onChange={this.onChange}
+                    >
+                      <option value="rating">Rating</option>
+                      <option value="name">Name</option>
+                      <option value="quantity">Quantity</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+                <Col xs="6" sm="3">
+                  <FormGroup>
+                    <Label for="showOnly">Show Only</Label>
+                    <Input
+                      type="select"
+                      name="showOnly"
+                      id="showOnly"
+                      onChange={this.onChange}
+                    >
+                      <option value="all">All</option>
+                      <option value="fiveStars">5 Stars</option>
+                      <option value="fourStars">4 Stars</option>
+                      <option value="threeStars">3 Stars</option>
+                      <option value="twoStars">2 Stars</option>
+                      <option value="oneStars">1 Stars</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+                <Col xs="6" sm="3">
+                  <FormGroup>
+                    <Label for="view">View</Label>
+                    <Input
+                    type="select"
+                    name="view"
+                    id="view"
+                    onChange={this.onChange}
+                    >
+                      <option value="listView">List</option>
+                      <option value="iconView">Icons</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+                <Col xs="6" sm="3">
+                  <FormGroup>
+                    <Label>Spent</Label>
+                      <Badge
+                        color="warning"
+                        className="amount-spent-badge"
+                      >
+                        {amountSpent}
+                      </Badge>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </Form>
+            <Row className='justify-content-center'>
+              {
+                inventoryList.length
+                ? (
+                  inventoryList
+                  .sort(sorting[orderBy])
+                  .filter(showFilter[showOnly])
+                  .map(item => (
+                    view === 'listView'
+                    ? (
+                        <ListViewChagpt
+                          key={item.uniqueId}
+                          item={item}
+                        />
+                    )
+                    : (
+                      <IconViewChagpt
+                        key={item.uniqueId}
+                        item={item}
+                      />
+                    )
+                  ))
+                )
+                : (
+                  <Col xs='12' className="card p-4 d-flex justify-content-center align-items-center">
+                    <h4 className="text-center mb-5">No Items :(</h4>
+                    <img src={sadPaimon} alt="Sad paimon" className="mw-50"/>
+                  </Col>
+                )
+              }
+            </Row>
+          </Container>
+        </div>
+      </>
+    )
+  }
+}

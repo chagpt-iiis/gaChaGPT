@@ -30,6 +30,7 @@ export default class Settings extends Component {
       'drifting-luminescence': 'Drifting Luminescence',
       'moment-of-bloom-2': 'Moment of Bloom 2',
       'chagpt-gacha': 'ChaGPT Gacha',
+      'chagpt-gacha-new': 'ChaGPT Gacha New',
     }
     this.onChange = this.onChange.bind(this)
   }

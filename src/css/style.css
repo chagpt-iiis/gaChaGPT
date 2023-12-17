@@ -247,6 +247,22 @@ video {
   background-image: url('../assets/images/ui/wanderlust-selected.png');
 }
 
+.banner-button.chagpt-gacha {
+  background-image: url('../assets/images/ui/ganyu.png');
+}
+
+.banner-button.chagpt-gacha.selected {
+  background-image: url('../assets/images/ui/ganyu-selected.png');
+}
+
+.banner-button.chagpt-gacha-new {
+  background-image: url('../assets/images/ui/ganyu.png');
+}
+
+.banner-button.chagpt-gacha-new.selected {
+  background-image: url('../assets/images/ui/ganyu-selected.png');
+}
+
 .carousel-container {
   position: relative;
   height: 65vh;

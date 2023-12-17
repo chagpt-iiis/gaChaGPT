@@ -4,6 +4,7 @@ import Details from './details'
 import Wish from './wish'
 import WishResults from './wish-results'
 import Inventory from './inventory'
+import InventoryChagpt from './inventory-chagpt'
 import BalladInGoblets from '../models/ballad-in-goblets'
 import SparklingSteps from '../models/sparkling-steps'
 import GentryOfHermitage from '../models/gentry-of-hermitage'
@@ -28,6 +29,8 @@ import BeginnersWish from '../models/beginners-wish'
 import EpitomeInvocation from '../models/epitome-invocation'
 import WanderlustInvocation from '../models/wanderlust-invocation'
 import ChagptGacha from '../models/chagpt-gacha'
+import ChagptGachaNew from '../models/chagpt-gacha-new'
+import WishResultsChagpt from './wish-results-chagpt'
 import { version } from '../../package.json';
 
 
@@ -61,6 +64,7 @@ export default class App extends Component {
     this.driftingLuminescence = new DriftingLuminescence()
     this.momentOfBloom2 = new MomentOfBloom2()
     this.chagptGacha = new ChagptGacha()
+    this.chagptGachaNew = new ChagptGachaNew()
     this.state = {
       view: 'banners',
       currentDetails: 'beginners-wish',
@@ -68,6 +72,7 @@ export default class App extends Component {
       isBeginnersWishLimited: true,
       isBeginnersWishOver10: true,
       inventory: {},
+      inventoryChagpt: {},
       wasDisclaimerSeen: true,
       isSettingsPageVisible: false,
       currentWishes: [],
@@ -97,6 +102,7 @@ export default class App extends Component {
         'drifting-luminescence': 0,
         'moment-of-bloom-2': 0,
         'chagpt-gacha': 0,
+        'chagpt-gacha-new': 0,
       }
     }
   }
@@ -146,6 +152,24 @@ export default class App extends Component {
       }
     }
     this.setState({inventory, currentWishes: []}, this.saveData)
+  }
+  updateInventoryChagpt(items) {
+    // Deep copy inventory
+    let { inventoryChagpt } = this.state
+    inventoryChagpt = Object.assign({}, inventoryChagpt)
+    for(const item in inventoryChagpt) {
+      inventoryChagpt[item] = Object.assign({}, inventoryChagpt[item])
+    }
+    // Organize the items to update quantity
+    for(let i = 0; i < items.length; i++) {
+      if(inventoryChagpt[items[i].uniqueId]) {
+        inventoryChagpt[items[i].uniqueId].quantity++
+      } else {
+        inventoryChagpt[items[i].uniqueId] = items[i]
+        inventoryChagpt[items[i].uniqueId].quantity = 1
+      }
+    }
+    this.setState({inventoryChagpt, currentWishes: []}, this.saveData)
   }
   updateCharacterEventWish(selectedCharacterEventWish) {
     this.setState({
@@ -205,6 +229,7 @@ export default class App extends Component {
         'drifting-luminescence': this.driftingLuminescence.getState().attemptsCount,
         'moment-of-bloom-2': this.momentOfBloom2.getState().attemptsCount,
         'chagpt-gacha': this.chagptGacha.getState().attemptsCount,
+        'chagpt-gacha-new': this.chagptGachaNew.getState().attemptsCount,
       }
     })
   }
@@ -233,11 +258,13 @@ export default class App extends Component {
     this.driftingLuminescence.reset()
     this.momentOfBloom2.reset()
     this.chagptGacha.reset()
+    this.chagptGachaNew.reset()
     this.setState({
       isBeginnersWishLimited: true,
       isBeginnersWishOver10: true,
       selectedWish: previouslySelectedWish,
-      inventory: {}
+      inventory: {},
+      inventoryChagpt: {},
     }, this.saveData)
   }
   saveData() {
@@ -245,6 +272,7 @@ export default class App extends Component {
       isBeginnersWishLimited,
       isBeginnersWishOver10,
       inventory,
+      inventoryChagpt,
       selectedCharacterEventWish
     } = this.state
     const data = {
@@ -252,6 +280,7 @@ export default class App extends Component {
       isBeginnersWishLimited,
       isBeginnersWishOver10,
       inventory,
+      inventoryChagpt,
       selectedCharacterEventWish,
       beginnersWish: this.beginnersWish.getState(),
       invitationToMundaneLife: this.invitationToMundaneLife.getState(),
@@ -277,6 +306,7 @@ export default class App extends Component {
       driftingLuminescence: this.driftingLuminescence.getState(),
       momentOfBloom2: this.momentOfBloom2.getState(),
       chagptGacha: this.chagptGacha.getState(),
+      chagptGachaNew: this.chagptGachaNew.getState(),
     }
     localStorage.setItem('data', JSON.stringify(data))
     this.syncWishCountersWithState()
@@ -289,7 +319,8 @@ export default class App extends Component {
       const {
         isBeginnersWishLimited,
         isBeginnersWishOver10,
-        inventory
+        inventory,
+        inventoryChagpt,
       } = data
       this.beginnersWish.attemptsCount = data.beginnersWishCount || 0
       this.invitationToMundaneLife.attemptsCount = data.invitationToMundaneLife || 0
@@ -315,10 +346,12 @@ export default class App extends Component {
       this.driftingLuminescence.attemptsCount = data.driftingLuminescence || 0
       this.momentOfBloom2.attemptsCount = data.momentOfBloom2 || 0
       this.chagptGacha.attemptsCount = data.chagptGacha || 0
+      this.chagptGachaNew.attemptsCount = data.chagptGachaNew || 0
       this.setState({
         isBeginnersWishLimited,
         isBeginnersWishOver10,
-        inventory
+        inventory,
+        inventoryChagpt,
       }, this.backToHome)
     } else {
       // Load version 1 with softPity4 and softPity5
@@ -326,6 +359,7 @@ export default class App extends Component {
         isBeginnersWishLimited,
         isBeginnersWishOver10,
         inventory,
+        inventoryChagpt,
         selectedCharacterEventWish
       } = data
       this.beginnersWish.setState(data.beginnersWish);
@@ -352,10 +386,12 @@ export default class App extends Component {
       this.driftingLuminescence.setState(data.driftingLuminescence)
       this.momentOfBloom2.setState(data.momentOfBloom2)
       this.chagptGacha.setState(data.chagptGacha)
+      this.chagptGachaNew.setState(data.chagptGachaNew)
       this.setState({
         isBeginnersWishLimited,
         isBeginnersWishOver10,
         inventory,
+        inventoryChagpt,
         selectedCharacterEventWish
       }, () => {
           this.backToHome()
@@ -397,6 +433,7 @@ export default class App extends Component {
           isBeginnersWishLimited,
           isBeginnersWishOver10,
           inventory,
+          inventoryChagpt,
           wasDisclaimerSeen,
           selectedDetail,
           currentWishes,
@@ -426,24 +463,56 @@ export default class App extends Component {
             selectedDetail={currentDetails}
             />
           case 'wish':
-            return <Wish
-            setView={this.setView}
-            is4StarItem={currentWishes.some(item => item.rating === 4)}
-            is5StarItem={currentWishes.some(item => item.rating === 5)}
-            isSingleItem={currentWishes.length === 1}
-            />
+            if (this.state.selectedWish ==  'chagptGachaNew' ) {
+              console.log('selectedWish', this.state.selectedWish)
+              console.log('currentWishes.length', currentWishes.length)
+              console.log('currentWishes', currentWishes)
+              return <Wish
+              setView={this.setView}
+              is4StarItem={currentWishes.some(item => item.assignedRating === 2)}
+              is5StarItem={
+                currentWishes.some(item => item.assignedRating === 3) ||
+                currentWishes.some(item => item.assignedRating === 4) ||
+                currentWishes.some(item => item.assignedRating === 5)
+              }
+              isSingleItem={currentWishes.length === 1}
+              />
+            } else {
+              return <Wish
+              setView={this.setView}
+              is4StarItem={currentWishes.some(item => item.rating === 4)}
+              is5StarItem={currentWishes.some(item => item.rating === 5)}
+              isSingleItem={currentWishes.length === 1}
+              />
+            }
           case 'wish-results':
-            return <WishResults
-            wishes={currentWishes}
-            updateInventory={this.updateInventory.bind(this)}
-            setView={this.setView}
-            inventory={inventory}
-            />
+            if (this.state.selectedWish ==  'chagptGachaNew' ) {
+              return <WishResultsChagpt
+              wishes={currentWishes}
+              updateInventory={this.updateInventoryChagpt.bind(this)}
+              setView={this.setView}
+              inventory={inventoryChagpt}
+              />
+            } else {
+              return <WishResults
+              wishes={currentWishes}
+              updateInventory={this.updateInventory.bind(this)}
+              setView={this.setView}
+              inventory={inventory}
+              />
+            }
           case 'inventory':
-            return <Inventory
-            inventory={inventory}
-            backToHome={this.backToHome.bind(this)}
-            />
+            if (this.state.selectedWish ==  'chagptGachaNew' ) {
+              return <InventoryChagpt
+              inventory={inventoryChagpt}
+              backToHome={this.backToHome.bind(this)}
+              />
+            } else {
+              return <Inventory
+              inventory={inventory}
+              backToHome={this.backToHome.bind(this)}
+              />
+            }
         }
   }
 }
