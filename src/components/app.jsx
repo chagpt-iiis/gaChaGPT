@@ -464,9 +464,9 @@ export default class App extends Component {
             />
           case 'wish':
             if (this.state.selectedWish ==  'chagptGachaNew' ) {
-              console.log('selectedWish', this.state.selectedWish)
-              console.log('currentWishes.length', currentWishes.length)
-              console.log('currentWishes', currentWishes)
+              // console.log('selectedWish', this.state.selectedWish)
+              // console.log('currentWishes.length', currentWishes.length)
+              // console.log('currentWishes', currentWishes)
               return <Wish
               setView={this.setView}
               is4StarItem={currentWishes.some(item => item.assignedRating === 2)}

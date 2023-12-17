@@ -19,7 +19,7 @@ export default class ChagptGachaNew {
     }
 
     roll(amount=5) {
-        console.log('amount', amount)
+        // console.log('amount', amount)
         const roll = [];
         for (let i = 0; i < amount; i++) {
             roll.push(this.rollOnce());
@@ -53,12 +53,12 @@ export default class ChagptGachaNew {
             }
         }
 
-        console.log('item.assigned', item.assigned)
-        console.log('item.assignedLevel', item.assignedLevel)
-        console.log('drops.length', this.drops.length)
-        console.log('prizePool.length', this.prizePool.length)
-        console.log('assignedDrops.length', this.assignedDrops.length)
-        console.log('assignedPrize.length', this.assignedPrize.length)
+        // console.log('item.assigned', item.assigned)
+        // console.log('item.assignedLevel', item.assignedLevel)
+        // console.log('drops.length', this.drops.length)
+        // console.log('prizePool.length', this.prizePool.length)
+        // console.log('assignedDrops.length', this.assignedDrops.length)
+        // console.log('assignedPrize.length', this.assignedPrize.length)
 
         return item;
     }
@@ -68,6 +68,8 @@ export default class ChagptGachaNew {
         item.assigned = true;
         item.assignedLevel = prize.level;
         item.assignedRating = prize.rating;
+        item.assignedLevelChs = this.Level2LevelChs(prize.level);
+        item.color = this.Level2Color(prize.level)
 
         prize.assigned = true;
         prize.assignToId = item.id;
@@ -86,15 +88,21 @@ export default class ChagptGachaNew {
             for (let j = 0; j < lastIdxDict[teaType]; j++) {
 
                 const src = `${teaType}.png`;
+                const teaName = this.TeaType2TeaName(teaType);
+                const teaNameId = `${teaName}-${j}`;
 
                 drops.push({
                     teaType: teaType,
                     id: j,
                     src: src,
+                    teaName: teaName,
+                    teaNameId: teaNameId,
                     uniqueId: uniqueId,
                     assigned: false,
                     assignedLevel: '0-star',
                     assignedRating: 0,
+                    assignedLevelChs: '未获奖',
+                    color: '#000000'
                 });
                 uniqueId++;
             }
@@ -102,6 +110,55 @@ export default class ChagptGachaNew {
 
         return drops;
     }
+
+    TeaType2TeaName(teaType) {
+        switch(teaType){
+            case 'tea_a':
+                return '高山乌龙'
+            case 'tea_b':
+                return '凤凰单枞'
+            case 'tea_c':
+                return '玫瑰红茶'
+            case 'tea_d':
+                return '锡兰红茶'
+            case 'tea_e':
+                return '安溪铁观音'
+            case 'tea_f':
+                return '金骏眉'
+        }
+    }
+
+    Level2LevelChs(Level) {
+        switch(Level){
+            case '1-star':
+                return '三等奖'
+            case '2-star':
+                return '二等奖'
+            case '3-star':
+                return '一等奖'
+            case '4-star':
+                return '特等奖'
+            case '5-star':
+                return '姚姚领先奖'
+        }
+    }
+
+    Level2Color(Level) {
+        switch(Level){
+            case '1-star':
+                return '#39b54a'
+            case '2-star':
+                return '#0071bc'
+            case '3-star':
+                return '#7030a0'
+            case '4-star':
+                return '#ff8800'
+            case '5-star':
+                return '#e94121'
+        }
+    }
+
+
 
     generatePool(prizeNumDict = { '1-star': 60, '2-star': 10, '3-star': 3, '4-star': 1, '5-star': 1 }) {
         const pool = [];

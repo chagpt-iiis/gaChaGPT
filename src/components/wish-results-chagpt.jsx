@@ -11,7 +11,7 @@ export default class WishResultsChagpt extends Component {
     const isSingleItem = wishes.length === 1
     return (
       <div className="wish-results">
-        <Container>
+        <Container style={{ 'maxWidth': '1960px' }}>
           <Row className="vh-10">
             <Col xs="12">
               <div className="d-flex justify-content-end mt-2">

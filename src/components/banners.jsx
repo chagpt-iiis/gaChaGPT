@@ -14,7 +14,7 @@ export default class Banners extends Component {
       selectedCharacterEventWish,
       banners: {
         'beginners-wish': 'Novice Wishes',
-        [selectedCharacterEventWish]: 'Character Event Wish',
+        [selectedCharacterEventWish]: 'ChaGPT Gacha',
         'epitome-invocation': 'Weapon Event Wish',
         'wanderlust-invocation': 'Standard Wish'
       },
@@ -47,7 +47,7 @@ export default class Banners extends Component {
       const wishes = {}
       for(const b in oldBanners) {
         if(selectedCharacterEventWish === b) {
-          banners[newSelectedCharacterEventWish] = 'Character Event Wish'
+          banners[newSelectedCharacterEventWish] = 'ChaGPT Gacha'
         } else {
           banners[b] = oldBanners[b]
         }
@@ -96,7 +96,7 @@ export default class Banners extends Component {
       this.setState({
         selectedBanner: this.props.getFormattedCharacterEventWish('kebabCase'),
         banners: {
-          [this.props.getFormattedCharacterEventWish('kebabCase')]: 'Character Event Wish',
+          [this.props.getFormattedCharacterEventWish('kebabCase')]: 'ChaGPT Gacha',
           'epitome-invocation': 'Weapon Event Wish',
           'wanderlust-invocation': 'Standard Wish'
         },
@@ -111,7 +111,7 @@ export default class Banners extends Component {
       this.setState({
         banners: {
           'beginners-wish': 'Novice Wishes',
-          [this.props.getFormattedCharacterEventWish('kebabCase')]: 'Character Event Wish',
+          [this.props.getFormattedCharacterEventWish('kebabCase')]: 'ChaGPT Gacha',
           'epitome-invocation': 'Weapon Event Wish',
           'wanderlust-invocation': 'Standard Wish'
         },
@@ -145,6 +145,23 @@ export default class Banners extends Component {
     } = this.props
     const bannerKeys = Object.keys(this.state.banners);
     const selectedBannerIndex = bannerKeys.findIndex(b => b === selectedBanner)
+
+    let wishButtonName, wish10ButtonName, settingsButtonName, detailsButtonName, inventoryButtonName;
+    // console.log('selectedBanner', selectedBanner)
+
+    if (selectedBanner ===  'chagpt-gacha-new' ) {
+      wishButtonName = '单次抽取'
+      wish10ButtonName = '5次抽取'
+      settingsButtonName = '设置'
+      detailsButtonName = '细节'
+      inventoryButtonName = '记录'
+    } else {
+      wishButtonName = 'Wish'
+      wish10ButtonName = 'Wish x10'
+      settingsButtonName = 'Settings'
+      detailsButtonName = 'Details'
+      inventoryButtonName = 'Inventory'
+    }
     return (
       <>
         {
@@ -162,12 +179,12 @@ export default class Banners extends Component {
           />
         }
         <div className="wrapper banners">
-          <div className="giws-banners-container">
+          <div className="giws-banners-container" style={{ 'maxWidth': '2048px' }}>
             <div className="heading">
-              <div className="current-banner">
+              <div className="current-banner" style={{ 'fontSize': '4.0rem', 'width': '600px' }}>
                 <div>{this.bannerText}</div>
               </div>
-              <div className="select-banner">
+              <div className="select-banner" style={{ 'width': '1000px' }}>
                 {
                   bannerKeys.map(banner => (
                     <BannerButton
@@ -197,7 +214,7 @@ export default class Banners extends Component {
                   bannerKeys.map(banner => {
                     return (
                       <div key={banner} className={`banner-slide ${banner}`}>
-                        <div
+                        <div style={{'width': '100px', 'height': '100px', 'fontSize': '3.3rem'}}
                         title={`Your wish counter, you have wished ${userWishes[banner]} times`}
                         className="wish-counter">{userWishes[banner]}</div>
                         <img src={banners(`./${banner}.png`).default} />
@@ -207,33 +224,35 @@ export default class Banners extends Component {
                 }
               </Carousel>
             </div>
-            <div className="action-container">
-              <div className="button-container">
-                <button
+            <div className="action-container">  
+              <div className="button-container" style={{ 'fontSize': '2.0rem', 'width': '900px' }}>
+                <button style={{'width': '200px' }}
                   onClick={() => this.toggleSettingsModal(true)}
-                >Settings</button>
-                <button
+                >{settingsButtonName}</button>
+                <button style={{'width': '200px' }}
                   onClick={() => setView('details')}
-                >Details</button>
-                <button
+                >{detailsButtonName}</button>
+                <button style={{'width': '200px' }}
                   onClick={() => setView('inventory')}
-                >Inventory</button>
+                >{inventoryButtonName}</button>
               </div>
-              <div className="wish-container d-flex justify-content-center">
+              <div className="wish-container d-flex justify-content-center" style={{ 'fontSize': '2.0rem'}}>
                 <div
                   onClick={() => {
                     wish(this.state.wishes[selectedBanner], true)
                   }}
                   className="wish-button"
-                >Wish</div>
+                  style={{'width': '300px' }}
+                >{wishButtonName}</div>
                 <div
                   className={`wish-button ${selectedBanner === 'beginners-wish' && isBeginnersWishOver10 && 'disabled'}`}
                   onClick={() => {
                     if(isBeginnersWishOver10 && selectedBanner === 'beginners-wish') return;
                     wish(this.state.wishes[selectedBanner])
                   }}
+                  style={{'width': '300px' }}
                 >
-                  Wish x10
+                {wish10ButtonName}
               </div>
               </div>
             </div>
