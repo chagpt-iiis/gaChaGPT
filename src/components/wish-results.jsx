@@ -3,6 +3,10 @@ import { Container, Row, Col } from 'reactstrap';
 import WishItem from './wish-item'
 import WishItemSingle from './wish-item-single'
 export default class WishResults extends Component {
+  constructor(props){
+    super(props);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
   isNewItem(key) {
     return !this.props.inventory[key]
   }
@@ -13,6 +17,24 @@ export default class WishResults extends Component {
       return 50;
     }
   }
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyPress);
+  }
+
+  handleKeyPress(event) {
+    const key = event.key.toLowerCase();
+    switch (key) {
+      case 'n':
+        document.getElementById('close-button').click();
+        break;
+      default:
+        break;
+    }
+  };
   render() {
     const { wishes, setView, updateInventory } = this.props
     const isSingleItem = wishes.length === 1
@@ -22,7 +44,7 @@ export default class WishResults extends Component {
           <Row className="vh-10">
             <Col xs="12">
               <div className="d-flex justify-content-end mt-2">
-                <div onClick={() => {
+                <div id="close-button" onClick={() => {
                   setView('banners');
                   updateInventory(wishes.map(item => Object.assign({}, item)));
                 }} className="close-button"></div>

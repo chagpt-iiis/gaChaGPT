@@ -28,11 +28,35 @@ export default class Banners extends Component {
       isSettingsPageVisible: false
     }
 
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+
   }
   componentDidMount() {
     this.toggleBeginnersWish(this.props.isBeginnersWishLimited)
     this.setState({ selectedBanner: this.props.selectedBanner })
+    // Add event listeners for keydown
+    window.addEventListener('keydown', this.handleKeyPress);
   }
+
+  componentWillUnmount() {
+    // Remove event listeners when the component is unmounted
+    window.removeEventListener('keydown', this.handleKeyPress);
+  }
+
+  handleKeyPress(event) {
+    const key = event.key.toLowerCase();
+    switch (key) {
+      case 'c':
+        document.getElementById('wishButton').click();
+        break;
+      case 'v':
+        document.getElementById('wish10Button').click();
+        break;
+      default:
+        break;
+    }
+  };
+
   componentDidUpdate(prevProps) {
     if (prevProps.isBeginnersWishLimited !== this.props.isBeginnersWishLimited) {
       this.toggleBeginnersWish(this.props.isBeginnersWishLimited)
@@ -238,6 +262,7 @@ export default class Banners extends Component {
               </div>
               <div className="wish-container d-flex justify-content-center" style={{ 'fontSize': '2.0rem'}}>
                 <div
+                  id='wishButton'
                   onClick={() => {
                     wish(this.state.wishes[selectedBanner], true)
                   }}
@@ -245,6 +270,7 @@ export default class Banners extends Component {
                   style={{'width': '300px' }}
                 >{wishButtonName}</div>
                 <div
+                  id='wish10Button'
                   className={`wish-button ${selectedBanner === 'beginners-wish' && isBeginnersWishOver10 && 'disabled'}`}
                   onClick={() => {
                     if(isBeginnersWishOver10 && selectedBanner === 'beginners-wish') return;
