@@ -24,6 +24,12 @@ export default class ChagptGachaNew {
         for (let i = 0; i < amount; i++) {
             roll.push(this.rollOnce());
         }
+
+        // console.log('this.attemptsCount', this.attemptsCount)
+        // console.log('this.threshold3', this.threshold3)
+        // console.log('this.threshold4', this.threshold4)
+        // console.log('this.threshold5', this.threshold5)
+
         return roll;
     }
 
@@ -37,19 +43,27 @@ export default class ChagptGachaNew {
         for (let idx = 0; idx < this.prizePool.length; idx++) {
             const prize = this.prizePool[idx];
 
-            if (prize.level === '5-star' && this.attemptsCount >= this.threshold5) {
-                this.assignPrizeToItem(idx, item);
-                break;
-            } else if (prize.level === '4-star' && this.attemptsCount >= this.threshold4) {
-                this.assignPrizeToItem(idx, item);
-                break;
-            } else if (prize.level === '3-star' && this.attemptsCount >= this.threshold3) {
-                this.threshold3 += this.pity3Limit;
-                this.assignPrizeToItem(idx, item);
-                break;
-            } else if (prize.level === '1-star' || prize.level === '2-star') {
-                this.assignPrizeToItem(idx, item);
-                break;
+            if (this.attemptsCount === (this.threshold3 + this.pity3Limit)) {
+                if (prize.level === '3-star') {
+                    this.threshold3 += this.pity3Limit;
+                    this.assignPrizeToItem(idx, item);
+                    break;
+                }
+            } else {
+                if (prize.level === '5-star' && this.attemptsCount > this.threshold5) {
+                    this.assignPrizeToItem(idx, item);
+                    break;
+                } else if (prize.level === '4-star' && this.attemptsCount > this.threshold4) {
+                    this.assignPrizeToItem(idx, item);
+                    break;
+                } else if (prize.level === '3-star' && this.attemptsCount > this.threshold3) {
+                    this.threshold3 += this.pity3Limit;
+                    this.assignPrizeToItem(idx, item);
+                    break;
+                } else if (prize.level === '1-star' || prize.level === '2-star') {
+                    this.assignPrizeToItem(idx, item);
+                    break;
+                }
             }
         }
 
