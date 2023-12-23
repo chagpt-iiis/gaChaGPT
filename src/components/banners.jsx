@@ -14,7 +14,7 @@ export default class Banners extends Component {
       selectedCharacterEventWish,
       banners: {
         'beginners-wish': 'Novice Wishes',
-        [selectedCharacterEventWish]: 'ChaGPT Gacha',
+        [selectedCharacterEventWish]: 'CháGPT Gacha',
         'epitome-invocation': 'Weapon Event Wish',
         'wanderlust-invocation': 'Standard Wish'
       },
@@ -71,7 +71,7 @@ export default class Banners extends Component {
       const wishes = {}
       for(const b in oldBanners) {
         if(selectedCharacterEventWish === b) {
-          banners[newSelectedCharacterEventWish] = 'ChaGPT Gacha'
+          banners[newSelectedCharacterEventWish] = 'CháGPT Gacha'
         } else {
           banners[b] = oldBanners[b]
         }
@@ -120,7 +120,7 @@ export default class Banners extends Component {
       this.setState({
         selectedBanner: this.props.getFormattedCharacterEventWish('kebabCase'),
         banners: {
-          [this.props.getFormattedCharacterEventWish('kebabCase')]: 'ChaGPT Gacha',
+          [this.props.getFormattedCharacterEventWish('kebabCase')]: 'CháGPT Gacha',
           'epitome-invocation': 'Weapon Event Wish',
           'wanderlust-invocation': 'Standard Wish'
         },
@@ -135,7 +135,7 @@ export default class Banners extends Component {
       this.setState({
         banners: {
           'beginners-wish': 'Novice Wishes',
-          [this.props.getFormattedCharacterEventWish('kebabCase')]: 'ChaGPT Gacha',
+          [this.props.getFormattedCharacterEventWish('kebabCase')]: 'CháGPT Gacha',
           'epitome-invocation': 'Weapon Event Wish',
           'wanderlust-invocation': 'Standard Wish'
         },
@@ -208,7 +208,7 @@ export default class Banners extends Component {
               <div className="current-banner" style={{ 'fontSize': '4.0rem', 'width': '600px' }}>
                 <div>{this.bannerText}</div>
               </div>
-              <div className="select-banner" style={{ 'width': '1000px' }}>
+              <div className="select-banner" style={{ 'width': '750px' }}>
                 {
                   bannerKeys.map(banner => (
                     <BannerButton
@@ -249,14 +249,14 @@ export default class Banners extends Component {
               </Carousel>
             </div>
             <div className="action-container">  
-              <div className="button-container" style={{ 'fontSize': '2.0rem', 'width': '900px' }}>
-                <button style={{'width': '200px' }}
+              <div className="button-container" style={{ 'fontSize': '1.5rem', 'width': '600px' }}>
+                <button style={{'width': '150px' }}
                   onClick={() => this.toggleSettingsModal(true)}
                 >{settingsButtonName}</button>
-                <button style={{'width': '200px' }}
+                <button style={{'width': '150px' }}
                   onClick={() => setView('details')}
                 >{detailsButtonName}</button>
-                <button style={{'width': '200px' }}
+                <button style={{'width': '150px' }}
                   onClick={() => setView('inventory')}
                 >{inventoryButtonName}</button>
               </div>

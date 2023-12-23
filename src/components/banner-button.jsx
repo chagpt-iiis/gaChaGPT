@@ -6,7 +6,7 @@ export default function BannerButton(props) {
     <div
     className={`banner-button ${className} ${isSelected ? 'selected': ''}`}
     // className={`banner-button ${className} ${isSelected ? 'selected': ''}`}
-    style={{width: '300px', height: '160px'}}
+    style={{width: '250px', height: '100px'}}
     onClick={onClick}
     ></div>
   )

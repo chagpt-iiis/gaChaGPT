@@ -152,6 +152,8 @@ export default class ChagptGachaNew {
                 const teaName = this.TeaType2TeaName(teaType);
                 const teaNameId = `${teaName}-${j}`;
                 const debugTeaName = teaType[4].toUpperCase();
+                const bgcolor = this.TeaType2TeaColor(teaType);
+                const lettercolor = this.TeaType2LetterColor(teaType);
 
                 drops.push({
                     teaType: teaType,
@@ -164,7 +166,9 @@ export default class ChagptGachaNew {
                     assignedLevel: '0-star',
                     assignedRating: 0,
                     assignedLevelChs: '未获奖',
-                    color: '#000000'
+                    color: '#000000',
+                    bgcolor: bgcolor,
+                    lettercolor: lettercolor,
                 });
                 uniqueId++;
             }
@@ -187,6 +191,40 @@ export default class ChagptGachaNew {
                 return '安溪铁观音'
             case 'tea_f':
                 return '金骏眉'
+        }
+    }
+
+    TeaType2TeaColor(teaType) {
+        switch(teaType){
+            case 'tea_a':
+                return '#d6c6bc'
+            case 'tea_b':
+                return '#fcc5a8'
+            case 'tea_c':
+                return '#f6cad4'
+            case 'tea_d':
+                return '#dc8d5f'
+            case 'tea_e':
+                return '#78c9a8'
+            case 'tea_f':
+                return '#a4b9c9'
+        }
+    }
+
+    TeaType2LetterColor(teaType) {
+        switch(teaType){
+            case 'tea_a':
+                return '#c96312'
+            case 'tea_b':
+                return '#c54600'
+            case 'tea_c':
+                return '#bf2849'
+            case 'tea_d':
+                return '#7d2e1e'
+            case 'tea_e':
+                return '#1d5f00'
+            case 'tea_f':
+                return '#78770f'
         }
     }
 
