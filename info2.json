@@ -18,27 +18,20 @@
 	},
 	"counts": [ 200, 200, 200, 200, 200, 200 ],
 	"exclude": [
+		"F183", "B114", "A090", "E122", "C059",
+		"D111", "C045", "D126", "C092", "E045",
+		"D105", "A021", "B066", "E098", "A142",
+		"A096", "A031", "B088", "B123", "C104",
+		"F059", "E187", "C079", "B143", "F003"
 	],
 	"headers": {
-		"cookie": "",
-		"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 	},
-	"prize": [ 60, 10, 3, 1, 1 ],
+	"prize": [ 40, 6, 2, 1, 1 ],
 	"rolls": [
-		{ "level": 0, "block": 18846801 },
-		{ "level": 0, "block": 18846802 },
-		{ "level": 0, "block": 18846803 },
-		{ "level": 0, "block": 18846804 },
-		{ "level": 1, "block": 18846805 },
 		{ "level": 2, "block": 18846806 },
 		{ "level": 2, "block": 18846807 },
 		{ "level": 2, "block": 18846808 },
 		{ "level": 2, "block": 18846809 },
-		{ "level": 3, "block": 18846810 },
-		{ "level": 4, "block": 18846811 },
-		{ "level": 4, "block": 18846812 },
-		{ "level": 4, "block": 18846813 },
-		{ "level": 4, "block": 18846814 },
-		{ "level": 5, "block": 18846815 }
+		{ "level": 3, "block": 18846810 }
 	]
 }
