@@ -20,8 +20,8 @@ export default class ChagptGachaNew {
         this.pityCounter5 = 0;
     }
 
-    roll(amount = 5) {
-        let seed = new Uint32Array(unitTestSeeds.pop());
+    roll(amount = 5, /** @type {Uint32Array} */ seed) {
+        // let seed = new Uint32Array(unitTestSeeds.pop());
 
         let i;
         console.log('seed =', seed);
@@ -157,7 +157,7 @@ export default class ChagptGachaNew {
                     teaType: teaType,
                     id: j,
                     src: src,
-                    teaName: debugTeaName,
+                    teaName: teaName,
                     teaNameId: teaNameId,
                     uniqueId: uniqueId,
                     assigned: false,

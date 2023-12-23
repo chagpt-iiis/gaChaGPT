@@ -130,10 +130,32 @@ export default class App extends Component {
     this.setState({selectedWish})
   }
   wish(selectedWish, isOneWish = false) {
-    this.setState({
-      currentWishes: isOneWish ? [this[selectedWish].rollOnce()] : this[selectedWish].roll(),
-      selectedWish
-    }, () => this.setView('wish'))
+    const backendUrl = 'http://localhost:1832'
+    const secret = 'chagpt1224syccyxcl'
+
+    if (isOneWish) {
+      this.setState({
+        currentWishes: [this[selectedWish].rollOnce()],
+        selectedWish
+      }, () => this.setView('wish'))
+    } else {
+      this.setView('wish');
+      fetch(new URL('/block', backendUrl), {
+        method: 'POST',
+        headers: { 'content-type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({ secret }),
+      })
+        .then(data => data.json())
+        .then(({ hash }) => {
+          const seed = Uint32Array.from({ length: 8 }, (_, id) =>
+            parseInt(hash.substring(id * 8, (id + 1) * 8), 16)
+          )
+          this.setState({
+            currentWishes: this[selectedWish].roll(5, seed),
+            selectedWish,
+          })
+        })
+    }
   }
   updateInventory(items) {
     // Deep copy inventory
