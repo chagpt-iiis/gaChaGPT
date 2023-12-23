@@ -1,125 +1,74 @@
-import numpy as np
+#!/usr/bin/env python3
 
-class ChagptGacha(object):
+from random import Random
+import json
 
-    def __init__(self):
-        self.drops = self.generate_drops()
-        self.assigned_drops = []
+with open('info.json') as f:
+	config = json.load(f)
 
-        self.prize_pool = self.generate_pool()
-        self.assigned_prize = []
+S = set()
+for i, c in enumerate(config['counts']):
+	ty = chr(65 + i)
+	for j in range(c):
+		S.add(ty + str(j).zfill(3))
+for ex in config['exclude']:
+	S.remove(ex)
+S = sorted(S)
 
-        self.attemptsCount = 0
-        self.pity3Limit = 25
-        self.threshold3 = 0
-        self.threshold4 = 50
-        self.threshold5 = 70
+prize = config['prize']
+assert len(prize) == 5
 
-        # useless property
-        self.pityCounter3 = 0
-        self.pityCounter4 = 0
-        self.pityCounter5 = 0
+cache = config['cache']
 
+'''
+levels:
+	0 -> { 0, 1, 2 }
+	1 -> if(three 2's, 2, { 0, 1, 2 })
+	2 -> if(two 2's, 2, { 0, 1, 2 })
+	3 -> { 0, 1, 2, 3 }
+	4 -> { 0, 1, 2, 3, 4 }
+'''
+def Roll(rng, level):
+	global prize
+	if level in [1, 2]:
+		assert prize[2] <= 4 - level
+		if prize[2] == 4 - level:
+			return 2
+	upper = max(level, 2) + 1
+	s = sum(prize[:upper])
+	assert s > 0
+	k = rng._randbelow(s)
+	for i in range(upper):
+		if k < prize[i]:
+			return i
+		k -= prize[i]
+	assert False
 
-    def roll(self, amount):
-        roll = []
-        for i in range(amount):
-            roll.append(self.rollOnce())
-        return roll
+for roll in config['rolls']:
+	level = roll['level']
+	block = roll['block']
+	hex_hash = cache.get(str(block))
+	if hex_hash is None:
+		import requests
+		res = requests.get(
+			f'https://blockexplorer.one/ajax/eth/mainnet/block-info/{block}?numeric=1',
+			headers = config['headers']
+		)
+		res.encoding = 'utf8'
+		r = res.json()
+		hex_hash = r['hash'][2:]
+	print(f'level: \x1b[32m{level}\x1b[0m, block: \x1b[32m{block}\x1b[0m, hash: \x1b[33m{hex_hash}\x1b[0m')
+	seed = int(hex_hash, 16)
+	rng = Random(seed)
 
+	for k in range(5):
+		idx = rng._randbelow(len(S))
+		item = S.pop(idx)
 
-    def rollOnce(self):
-        self.attemptsCount += 1
+		award = Roll(rng, level)
+		assert prize[award] > 0
+		prize[award] -= 1
 
-        np.random.shuffle(self.drops)
-        np.random.shuffle(self.prize_pool)
-        item = self.drops.pop()
+		print(f'  \x1b[36m{k}\x1b[0m -> (\x1b[33m{item}\x1b[0m, \x1b[32m{award}\x1b[0m)')
 
-        for idx, prize in enumerate(self.prize_pool):
-            if (prize['level'] == '5-star') and (self.attemptsCount >= self.threshold5):
-                self.assign_prize_to_item(idx, item)
-            elif (prize['level'] == '4-star') and (self.attemptsCount >= self.threshold4):
-                self.assign_prize_to_item(idx, item)
-            elif (prize['level'] == '3-star') and (self.attemptsCount >= self.threshold3):
-                self.threshold3 += self.pity3Limit
-                self.assign_prize_to_item(idx, item)
-            elif prize['level'] == '1-star' or prize['level'] == '2-star':
-                self.assign_prize_to_item(idx, item)
-
-        return item
-
-
-    def assign_prize_to_item(self, idx, item):
-
-        prize = self.prize_pool.pop(idx)
-        item['assigned'] = True
-        item['assigned_level'] = prize['level']
-
-        prize['assigned'] = True
-        prize['assign_to_id'] = item['id']
-        prize['assign_to_tea_type'] = item['tea_type']
-        prize['assign_to_unique_id'] = item['unique_id']
-
-        self.assigned_drops.append(item)
-        self.assigned_prize.append(prize)
-
-
-    def generate_drops(
-        self, last_idx_dict = {'tea_a': 199, 'tea_b': 199, 'tea_c': 199, 'tea_d': 199, 'tea_e': 199, 'tea_f': 199}
-    ):
-        drops = []
-        unique_id = 0
-        for tea_type in last_idx_dict.keys():
-            for j in range(last_idx_dict[tea_type]):
-                drops.append({
-                    'tea_type': tea_type,
-                    'id': j,
-                    'unique_id': unique_id,
-                    'assigned': False,
-                    'assigned_level': '0-star'
-                })
-                unique_id += 1
-        return drops
-
-
-    def generate_pool(
-        self, prize_num_dict = {'1-star': 60, '2-star': 10, '3-star': 3, '4-star': 1, '5-star': 1}
-    ):
-        pool = []
-        for level in prize_num_dict.keys():
-            for num in range(prize_num_dict[level]):
-                pool.append({
-                    'level': level,
-                    'id': num,
-                    'assigned': False,
-                    'assign_to_id': 0,
-                    'assign_to_tea_type': 'tea_x',
-                    'assign_to_unique_id': 0,
-                })
-
-    
-    def getState(self):
-        return {
-            'attemptsCount': self.attemptsCount,
-            'threshold3': self.threshold3,
-            'drops': self.drops,
-            'prize_pool': self.prize_pool,
-            'assigned_drops': self.assigned_drops,
-            'assigned_prize': self.assigned_prize,
-        }
-
-    def setState(self, state):
-        self.attemptsCount = state.attemptsCount
-        self.threshold3 = state.threshold3
-        self.drops = state.drops
-        self.prize_pool = state.prize_pool
-        self.assigned_drops = state.assigned_drops
-        self.assigned_prize = state.assigned_prize
-
-    def reset(self):
-        self.attemptsCount = 0
-        self.threshold3 = 0
-        self.drops = self.generate_drops()
-        self.prize_pool = self.generate_pool()
-        self.assigned_drops = []
-        self.assigned_prize = []
+print(f'remaining: \x1b[36m{prize}\x1b[0m')

@@ -1,0 +1,44 @@
+{
+	"cache": {
+		"18846801": "6c07847ef2f9fd47ec4bf36bed88d93e179870b491c16b02e302573bb4d8a094",
+		"18846802": "c1ff735e8e1def6fc25328a4180621b6fb04f46526bb90fa1722e40c0e83f003",
+		"18846803": "7343100825c416e80a419aa1326bb74452bd698b2b1af8c0bbcf62a8904b3e7d",
+		"18846804": "c70f78823b9803611aa6e91c39d60371ef1b8f76bb2ba2867b02f4986c1b733d",
+		"18846805": "32146b90724207f02095dd18ee4e01b31d19627de664483905c6b3ad7b0ec481",
+		"18846806": "534b4f856500beddac895d71d15fa124cc3e6d0d61b38bdbaea5016d67cddd51",
+		"18846807": "523e3cb7ded51c2766604d8261d109f3d5856c1b723f18d579a3063b99fa9090",
+		"18846808": "4957ba25cbc03a13a8e7ed10c875b996d08f433447df44c8ab5ca484aad2ff47",
+		"18846809": "8edccd9bcec832abfe6bf988a3ee8fdc290b0fdcf18e259b16c606e386a46c29",
+		"18846810": "4ee61bc311d05a6259574bc3f3991473522796a3e6632082c02707c4ad9ee50c",
+		"18846811": "17b26a2eb813523076d74133ba59995db7fe70472d16f931677ff724c6313e65",
+		"18846812": "16e680f5d5e53d3d41967b4351fdd84a6e625b9b5b2dcf76f4a4e77ff9edeb5c",
+		"18846813": "11a082a8125e0ff03384e72f4dd7e6b41f4f32f0f6eccddaca82346d4df4a478",
+		"18846814": "1cac36ed4378f6a321beae4fce83ed26224b3d283585558bff0b54982802c792",
+		"18846815": "dbeb6048f8139dfc2253f73f4b3d5e87493a3fec0af39fd2cbbc1c8f4b496fd0"
+	},
+	"counts": [ 200, 200, 200, 200, 200, 200 ],
+	"exclude": [
+	],
+	"headers": {
+		"cookie": "",
+		"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+	},
+	"prize": [ 60, 10, 3, 1, 1 ],
+	"rolls": [
+		{ "level": 0, "block": 18846801 },
+		{ "level": 0, "block": 18846802 },
+		{ "level": 0, "block": 18846803 },
+		{ "level": 0, "block": 18846804 },
+		{ "level": 1, "block": 18846805 },
+		{ "level": 0, "block": 18846806 },
+		{ "level": 0, "block": 18846807 },
+		{ "level": 0, "block": 18846808 },
+		{ "level": 0, "block": 18846809 },
+		{ "level": 2, "block": 18846810 },
+		{ "level": 3, "block": 18846811 },
+		{ "level": 3, "block": 18846812 },
+		{ "level": 3, "block": 18846813 },
+		{ "level": 3, "block": 18846814 },
+		{ "level": 4, "block": 18846815 }
+	]
+}
