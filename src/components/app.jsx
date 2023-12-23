@@ -67,8 +67,8 @@ export default class App extends Component {
     this.chagptGachaNew = new ChagptGachaNew()
     this.state = {
       view: 'banners',
-      currentDetails: 'beginners-wish',
-      selectedWish: 'beginnersWish',
+      currentDetails: 'chagpt-gacha-new',
+      selectedWish: 'chaGptGachaNew',
       isBeginnersWishLimited: true,
       isBeginnersWishOver10: true,
       inventory: {},
@@ -76,7 +76,7 @@ export default class App extends Component {
       wasDisclaimerSeen: true,
       isSettingsPageVisible: false,
       currentWishes: [],
-      selectedCharacterEventWish: 'moment-of-bloom-2',
+      selectedCharacterEventWish: 'chagpt-gacha-new',
       userWishes: {
         'beginners-wish': 0,
         'invitation-to-mundane-life': 0,
@@ -514,6 +514,7 @@ export default class App extends Component {
               updateInventory={this.updateInventoryChagpt.bind(this)}
               setView={this.setView}
               inventory={inventoryChagpt}
+              wish={this.wish.bind(this)}
               />
             } else {
               return <WishResults

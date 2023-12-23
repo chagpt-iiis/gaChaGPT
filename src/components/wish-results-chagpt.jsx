@@ -24,23 +24,26 @@ export default class WishResultsChagpt extends Component {
       case 'n':
         document.getElementById('close-button').click();
         break;
+      case 'v':
+        document.getElementById('next5button').click();
+        break;
       default:
         break;
     }
   };
   render() {
-    const { wishes, setView, updateInventory } = this.props
+    const { wishes, setView, updateInventory, wish, selectedBanner} = this.props
     const isSingleItem = wishes.length === 1
     return (
-      <div className="wish-results">
+      <div className="wish-results-chagpt">
         <Container style={{ 'maxWidth': '1960px' }}>
-          <Row className="vh-10">
+          <Row className="vh-5">
             <Col xs="12">
               <div className="d-flex justify-content-end mt-2">
-                <div id="close-button" onClick={() => {
+                <button id="close-button" onClick={() => {
                   setView('banners');
                   updateInventory(wishes.map(item => Object.assign({}, item)));
-                }} className="close-button"></div>
+                }} className="skip-button">关闭</button>
               </div>
             </Col>
           </Row>
@@ -62,6 +65,17 @@ export default class WishResultsChagpt extends Component {
                   ))
               )
             }
+          </Row>
+          <Row className="vh-5">
+            <Col xs="12">
+              <div className="d-flex justify-content-end mt-2">
+                <button id="next5button" onClick={() => {
+                  // setView('banners');
+                  updateInventory(wishes.map(item => Object.assign({}, item)));
+                  wish('chagptGachaNew');
+                }} className="skip-button">再次抽取</button>
+              </div>
+            </Col>
           </Row>
         </Container>
       </div>

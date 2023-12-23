@@ -256,11 +256,11 @@ video {
 }
 
 .banner-button.chagpt-gacha-new {
-  background-image: url('../assets/images/ui/ganyu.png');
+  background-image: url('../assets/images/ui/gachagpt.png');
 }
 
 .banner-button.chagpt-gacha-new.selected {
-  background-image: url('../assets/images/ui/ganyu-selected.png');
+  background-image: url('../assets/images/ui/gachagpt_selected.png');
 }
 
 .carousel-container {
@@ -450,6 +450,13 @@ td {
   background-repeat: no-repeat;
 }
 
+.wish-results-chagpt {
+  background-image: url('../assets/images/ui/wish-details-background-chagpt.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .new-badge {
   position: absolute;
   top: -7px;
@@ -562,6 +569,14 @@ td {
 
 .vh-10 {
   height: 10vh !important;
+}
+
+.vh-5 {
+  height: 5vh !important;
+}
+
+.vh-80 {
+  height: 80vh !important;
 }
 
 .mw-50 {
