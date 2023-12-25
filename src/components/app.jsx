@@ -130,8 +130,8 @@ export default class App extends Component {
     this.setState({selectedWish})
   }
   wish(selectedWish, isOneWish = false) {
-    const backendUrl = 'http://localhost:1832'
-    const secret = 'chagpt1224syccyxcl'
+    const backendUrl = 'http://59.66.131.240:1224'
+    const secret = 'jcxxysjxsjchagpt1224qhdxdlt'
 
     if (isOneWish) {
       this.setState({
@@ -139,7 +139,7 @@ export default class App extends Component {
         selectedWish
       }, () => this.setView('wish'))
     } else {
-      this.setView('wish');
+      // this.setView('wish');
       fetch(new URL('/block', backendUrl), {
         method: 'POST',
         headers: { 'content-type': 'application/json; charset=utf-8' },
@@ -153,6 +153,7 @@ export default class App extends Component {
           this.setState({
             currentWishes: this[selectedWish].roll(5, seed),
             selectedWish,
+            view: 'wish',
           })
         })
     }
